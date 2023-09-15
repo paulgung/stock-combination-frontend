@@ -1,4 +1,4 @@
-import { getSubcombinationData } from '@/services/opportunity';
+import { getSubcombinationData } from '@/services/ths';
 import { PageContainer } from '@ant-design/pro-layout';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import { ProTable } from '@ant-design/pro-table';

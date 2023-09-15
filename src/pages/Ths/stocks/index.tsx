@@ -1,4 +1,4 @@
-import { getStockData } from '@/services/opportunity';
+import { getStockData } from '@/services/ths';
 import { PageContainer } from '@ant-design/pro-layout';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import { ProTable } from '@ant-design/pro-table';
