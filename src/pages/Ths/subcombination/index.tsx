@@ -1,13 +1,12 @@
-import { getCombinationData } from '@/services/opportunity';
+import { getSubcombinationData } from '@/services/opportunity';
 import { PageContainer } from '@ant-design/pro-layout';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import { ProTable } from '@ant-design/pro-table';
-import { message } from 'antd';
+import { Button, message } from 'antd';
 import React, { useRef } from 'react';
 
 type IInterface = {
   id: number;
-  combinationName: string;
 };
 
 const Index: React.FC = () => {
@@ -15,14 +14,20 @@ const Index: React.FC = () => {
 
   const columns: ProColumns<IInterface>[] = [
     {
-      title: 'ID',
+      title: '组合ID',
       hideInSearch: false,
-      dataIndex: 'id',
+      dataIndex: 'combinationId',
     },
     {
-      title: '组合信息',
+      title: '子组合ID',
       ellipsis: true,
-      dataIndex: 'combinationName',
+      dataIndex: 'id',
+      hideInSearch: false,
+    },
+    {
+      title: '子组合名称',
+      ellipsis: true,
+      dataIndex: 'subCombinationName',
       hideInSearch: false,
     },
   ];
@@ -30,30 +35,22 @@ const Index: React.FC = () => {
   return (
     <PageContainer>
       <ProTable<IInterface>
-        headerTitle="组合信息"
+        headerTitle="产品信息"
         columns={columns}
         actionRef={actionRef}
         cardBordered
-        request={async (search) => {
-          const { rows = 10, current, id, combinationName } = search;
-          console.log(rows, current);
-
-          return getCombinationData({
+        request={async ({ rows = 10, current }) => {
+          return getSubcombinationData({
             pageSize: rows,
             pageNo: current,
-            id,
-            combinationName,
           }).then(
-            // 返回数据
             (res: any) => {
-              console.log('res', res);
               return {
                 data: res.data?.data,
                 success: res.data?.success,
                 total: res.data?.total,
               };
             },
-            // 失败处理
             (): any => {
               message.error('网络请求失败！');
               return {
@@ -64,6 +61,17 @@ const Index: React.FC = () => {
             },
           );
         }}
+        toolBarRender={() => [
+          <Button
+            type="primary"
+            key="primary"
+            onClick={() => {
+              handleModalOpen(true);
+            }}
+          >
+            新建
+          </Button>,
+        ]}
         editable={{
           type: 'multiple',
         }}

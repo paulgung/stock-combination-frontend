@@ -15,8 +15,8 @@ const Footer: React.FC = () => {
       copyright={`${currentYear} ${defaultMessage}`}
       links={[
         {
-          key: '工业品采购信息系统',
-          title: '工业品采购信息系统',
+          key: '股票信息管理系统',
+          title: '股票信息管理系统',
           href: 'https://github.com/paulgung/mro-boss-frontend',
           blankTarget: true,
         },

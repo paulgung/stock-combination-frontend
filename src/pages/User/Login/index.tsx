@@ -91,7 +91,7 @@ const Login: React.FC = () => {
             minWidth: 280,
             maxWidth: '75vw',
           }}
-          title="工业品采购信息系统"
+          title="股票信息管理系统"
           initialValues={{
             autoLogin: true,
           }}

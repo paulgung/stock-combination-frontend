@@ -1,4 +1,4 @@
-import { getSubcombinationData } from '@/services/opportunity';
+import { getStockData } from '@/services/opportunity';
 import { PageContainer } from '@ant-design/pro-layout';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import { ProTable } from '@ant-design/pro-table';
@@ -9,58 +9,75 @@ type IInterface = {
   id: number;
 };
 
+// 辅助方法
+const getStockColor = (item: any) => {
+  if (item > 0) {
+    return { color: 'red' };
+  } else if (item === 0) {
+    return {};
+  } else {
+    return { color: 'blue' };
+  }
+};
+
 const Index: React.FC = () => {
   const actionRef = useRef<ActionType>();
 
   const columns: ProColumns<IInterface>[] = [
     {
-      title: 'ID',
+      title: '子组合ID',
+      hideInSearch: false,
+      dataIndex: 'subCombinationId',
+    },
+    {
+      title: '股票ID',
       hideInSearch: false,
       dataIndex: 'id',
     },
     {
-      title: '产品编号',
+      title: '股票名称',
       ellipsis: true,
-      dataIndex: 'productId',
+      dataIndex: 'stockName',
+      hideInSearch: false,
+      render: (item, record: any) => {
+        console.log('record', record);
+        return (
+          <a href={record?.stockUrl} target="_blank" rel="noreferrer">
+            {item}
+          </a>
+        );
+      },
+    },
+    {
+      title: '股票编号',
+      ellipsis: true,
+      dataIndex: 'stockCode',
       hideInSearch: false,
     },
     {
-      title: '产品名称',
-      ellipsis: true,
-      dataIndex: 'productName',
-      hideInSearch: false,
-    },
-    {
-      title: '规格',
-      dataIndex: 'standard',
+      title: '股票价格',
+      dataIndex: 'stockPrice',
       hideInSearch: true,
     },
     {
-      title: '型号',
-      dataIndex: 'type',
+      title: '涨跌幅',
+      dataIndex: 'stockGains',
       hideInSearch: true,
-    },
-    {
-      title: '单位',
-      dataIndex: 'unit',
-      hideInSearch: true,
-    },
-    {
-      title: '备注',
-      dataIndex: 'remark',
-      hideInSearch: true,
+      render: (item: any) => {
+        return <div style={getStockColor(item)}>{item}%</div>;
+      },
     },
   ];
 
   return (
     <PageContainer>
       <ProTable<IInterface>
-        headerTitle="产品信息"
+        headerTitle="客户信息"
         columns={columns}
         actionRef={actionRef}
         cardBordered
         request={async ({ rows = 10, current }) => {
-          return getSubcombinationData({
+          return getStockData({
             pageSize: rows,
             pageNo: current,
           }).then(

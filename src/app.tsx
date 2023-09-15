@@ -1,5 +1,4 @@
 import { AvatarDropdown, AvatarName, Footer } from '@/components';
-import { currentUser as queryCurrentUser } from '@/services/ant-design-pro/api';
 import type { Settings as LayoutSettings } from '@ant-design/pro-components';
 import type { RunTimeLayoutConfig } from '@umijs/max';
 import { history } from '@umijs/max';
@@ -19,7 +18,6 @@ export async function getInitialState(): Promise<{
   // 初始化查询用户信息方法
   const fetchUserInfo = async () => {
     try {
-      const msg = await queryCurrentUser();
       const data = {
         access: 'admin',
         avatar: null,
@@ -32,11 +30,10 @@ export async function getInitialState(): Promise<{
         title: '前端开发工程师',
         userid: '20191002447',
       };
-      return msg.data || data;
+      return data;
     } catch (error) {
-      history.push(loginPath);
+      return { access: 'admin', avatar: null };
     }
-    return undefined;
   };
   // 如果不是登录页面，执行查询用户信息方法
   if (history.location.pathname !== loginPath) {

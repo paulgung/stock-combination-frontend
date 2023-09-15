@@ -11,7 +11,7 @@ const Settings: ProLayoutProps & {
   fixedHeader: true,
   fixSiderbar: true,
   colorWeak: false,
-  title: '工业品采购信息系统',
+  title: '股票信息管理系统',
   pwa: false,
   logo: undefined,
   iconfontUrl: '',

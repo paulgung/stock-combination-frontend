@@ -28,20 +28,20 @@
       {
         path: '/opportunity/combination',
         name: '组合',
-        component: './Opportunity/combination'
+        component: './Ths/combination'
       },
       {
         path: '/opportunity/subcombination/:id',
         name: '子组合',
-        component: './Opportunity/subcombination',
-        hideInMenu: true, // 隐藏菜单项
+        component: './Ths/subcombination',
+        hideInMenu: false, // 隐藏菜单项
 
       },
       {
         path: '/opportunity/stocks/:subId',
         name: '股票信息',
-        component: './Opportunity/stocks',
-        hideInMenu: true, // 隐藏菜单项
+        component: './Ths/stocks',
+        hideInMenu: false, // 隐藏菜单项
 
       }
     ],
