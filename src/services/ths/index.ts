@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:3000/ths';
+const baseUrl = 'http://1.12.67.43/:3000/ths';
 
 //获取组合信息
 export async function getCombinationData(params?: { [key: string]: any }) {
