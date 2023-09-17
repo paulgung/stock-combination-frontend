@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const baseUrl = 'http://1.12.67.43/ths';
+const protocal = window.location.protocol
+const baseUrl = `${protocal}//1.12.67.43/ths`;
 
 //获取组合信息
 export async function getCombinationData(params?: { [key: string]: any }) {
