@@ -17,32 +17,42 @@
     component: './Welcome'
   },
   {
-    path: '/opportunity',
+    path: '/ths',
     name: '股票组合',
     icon: 'desktop',
     routes: [
       {
-        path: '/opportunity',
-        redirect: '/opportunity/combination'
+        path: '/ths',
+        redirect: '/ths/combination'
       },
       {
-        path: '/opportunity/combination',
+        path: '/ths/combination',
         name: '组合',
         component: './Ths/combination'
       },
       {
-        path: '/opportunity/subcombination/:id',
+        path: '/ths/subcombination',
         name: '子组合',
         component: './Ths/subcombination',
         hideInMenu: false, // 隐藏菜单项
-
       },
       {
-        path: '/opportunity/stocks/:subId',
+        path: '/ths/subcombination/:id',
+        name: '子组合',
+        component: './Ths/subcombination',
+        hideInMenu: true, // 隐藏菜单项
+      },
+      {
+        path: '/ths/stocks',
         name: '股票信息',
         component: './Ths/stocks',
         hideInMenu: false, // 隐藏菜单项
-
+      },
+      {
+        path: '/ths/stocks/:subId',
+        name: '股票信息',
+        component: './Ths/stocks',
+        hideInMenu: true, // 隐藏菜单项
       }
     ],
   },

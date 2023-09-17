@@ -4,6 +4,7 @@ import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import { ProTable } from '@ant-design/pro-table';
 import { Button, message } from 'antd';
 import React, { useRef } from 'react';
+import { useParams } from 'react-router-dom';
 
 type IInterface = {
   id: number;
@@ -11,17 +12,18 @@ type IInterface = {
 
 // 辅助方法
 const getStockColor = (item: any) => {
-  if (item > 0) {
+  if (item[0] === '+') {
     return { color: 'red' };
-  } else if (item === 0) {
-    return {};
-  } else {
+  } else if (item[0] === '-') {
     return { color: 'blue' };
+  } else {
+    return {};
   }
 };
 
 const Index: React.FC = () => {
   const actionRef = useRef<ActionType>();
+  const { subId: subCombinationId } = useParams(); // 获取父组合id
 
   const columns: ProColumns<IInterface>[] = [
     {
@@ -31,14 +33,14 @@ const Index: React.FC = () => {
     },
     {
       title: '股票ID',
-      hideInSearch: false,
+      hideInSearch: true,
       dataIndex: 'id',
     },
     {
       title: '股票名称',
       ellipsis: true,
       dataIndex: 'stockName',
-      hideInSearch: false,
+      hideInSearch: true,
       render: (item, record: any) => {
         console.log('record', record);
         return (
@@ -52,7 +54,7 @@ const Index: React.FC = () => {
       title: '股票编号',
       ellipsis: true,
       dataIndex: 'stockCode',
-      hideInSearch: false,
+      hideInSearch: true,
     },
     {
       title: '股票价格',
@@ -64,7 +66,7 @@ const Index: React.FC = () => {
       dataIndex: 'stockGains',
       hideInSearch: true,
       render: (item: any) => {
-        return <div style={getStockColor(item)}>{item}%</div>;
+        return <div style={getStockColor(item)}>{item}</div>;
       },
     },
   ];
@@ -72,14 +74,15 @@ const Index: React.FC = () => {
   return (
     <PageContainer>
       <ProTable<IInterface>
-        headerTitle="客户信息"
+        headerTitle="股票信息"
         columns={columns}
         actionRef={actionRef}
         cardBordered
-        request={async ({ rows = 10, current }) => {
+        request={async ({ rows = 10, current, subCombinationId: _subCombinationId }) => {
           return getStockData({
             pageSize: rows,
             pageNo: current,
+            subCombinationId: _subCombinationId ? _subCombinationId : subCombinationId,
           }).then(
             (res: any) => {
               return {
@@ -99,13 +102,7 @@ const Index: React.FC = () => {
           );
         }}
         toolBarRender={() => [
-          <Button
-            type="primary"
-            key="primary"
-            onClick={() => {
-              handleModalOpen(true);
-            }}
-          >
+          <Button type="primary" key="primary">
             新建
           </Button>,
         ]}

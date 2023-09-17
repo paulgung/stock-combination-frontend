@@ -3,7 +3,7 @@ import type { Settings as LayoutSettings } from '@ant-design/pro-components';
 import type { RunTimeLayoutConfig } from '@umijs/max';
 import { history } from '@umijs/max';
 import defaultSettings from '../config/defaultSettings';
-import gongshaoxu from './images/gongshaoxu.jpg';
+import ths from './images/ths.jpeg';
 import { errorConfig } from './requestErrorConfig';
 const loginPath = '/user/login';
 
@@ -23,12 +23,9 @@ export async function getInitialState(): Promise<{
         avatar: null,
         country: 'China',
         email: 'gongshaoxu@gmail.com',
-        group: '京东集团－京东工业－前端技术部－前端开发工程师',
-        name: 'gongshaoxu',
-        phone: '15631027945',
+        name: '同花顺B2C第八组',
         signature: '我愿意看见一只只白帆',
         title: '前端开发工程师',
-        userid: '20191002447',
       };
       return data;
     } catch (error) {
@@ -87,7 +84,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
       },
     },
     avatarProps: {
-      src: gongshaoxu, // initialState?.currentUser?.avatar
+      src: ths, // initialState?.currentUser?.avatar
       title: <AvatarName />,
       render: (_, avatarChildren) => {
         return <AvatarDropdown>{avatarChildren}</AvatarDropdown>;

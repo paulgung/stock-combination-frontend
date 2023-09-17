@@ -2,8 +2,9 @@ import { getSubcombinationData } from '@/services/ths';
 import { PageContainer } from '@ant-design/pro-layout';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import { ProTable } from '@ant-design/pro-table';
-import { Button, message } from 'antd';
+import { message } from 'antd';
 import React, { useRef } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 type IInterface = {
   id: number;
@@ -11,7 +12,13 @@ type IInterface = {
 
 const Index: React.FC = () => {
   const actionRef = useRef<ActionType>();
+  const { id: combinationId } = useParams(); // 获取父组合id
+  const navigate = useNavigate();
 
+  // 携带子组合id跳转组合列表
+  const jumpStocks = (id: number): void => {
+    navigate(`/ths/stocks/${id}`);
+  };
   const columns: ProColumns<IInterface>[] = [
     {
       title: '组合ID',
@@ -22,27 +29,36 @@ const Index: React.FC = () => {
       title: '子组合ID',
       ellipsis: true,
       dataIndex: 'id',
-      hideInSearch: false,
+      hideInSearch: true,
     },
     {
       title: '子组合名称',
       ellipsis: true,
       dataIndex: 'subCombinationName',
-      hideInSearch: false,
+      hideInSearch: true,
+      render: (item, record) => {
+        return (
+          <div style={{ color: 'red', cursor: 'pointer' }} onClick={() => jumpStocks(record.id)}>
+            {item}
+          </div>
+        );
+      },
     },
   ];
 
   return (
     <PageContainer>
       <ProTable<IInterface>
-        headerTitle="产品信息"
+        headerTitle="子组合信息"
         columns={columns}
         actionRef={actionRef}
         cardBordered
-        request={async ({ rows = 10, current }) => {
+        request={async ({ rows = 10, current, combinationId: _combinationId }) => {
+          console.log('_combinationId', _combinationId);
           return getSubcombinationData({
             pageSize: rows,
             pageNo: current,
+            combinationId: _combinationId ? _combinationId : combinationId,
           }).then(
             (res: any) => {
               return {
@@ -61,17 +77,6 @@ const Index: React.FC = () => {
             },
           );
         }}
-        toolBarRender={() => [
-          <Button
-            type="primary"
-            key="primary"
-            onClick={() => {
-              handleModalOpen(true);
-            }}
-          >
-            新建
-          </Button>,
-        ]}
         editable={{
           type: 'multiple',
         }}

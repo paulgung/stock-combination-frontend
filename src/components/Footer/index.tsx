@@ -4,7 +4,7 @@ import React from 'react';
 
 // 页面尾部
 const Footer: React.FC = () => {
-  const defaultMessage = '中国地质大学(武汉)';
+  const defaultMessage = 'B2C集群23届第八组';
   const currentYear = new Date().getFullYear();
 
   return (
@@ -17,19 +17,19 @@ const Footer: React.FC = () => {
         {
           key: '股票信息管理系统',
           title: '股票信息管理系统',
-          href: 'https://github.com/paulgung/mro-boss-frontend',
+          href: '',
           blankTarget: true,
         },
         {
           key: 'github',
           title: <GithubOutlined />,
-          href: 'https://github.com/paulgung/mro-boss-frontend',
+          href: '',
           blankTarget: true,
         },
         {
-          key: 'paulgung',
-          title: 'paulgung',
-          href: 'https://github.com/paulgung/mro-boss-frontend',
+          key: 'github',
+          title: 'github',
+          href: '',
           blankTarget: true,
         },
       ]}

@@ -17,16 +17,11 @@ export default {
     res.send({
       success: true,
       data: {
-        name: 'gongshaoxu',
+        name: 'tonghuashun',
         avatar: null,
-        userid: '20191002447',
-        email: 'gongshaoxu@gmail.com',
         signature: '我愿意看见一只只白帆',
         title: '前端开发工程师',
-        group: '京东集团－京东工业－前端技术部－前端开发工程师',
         country: 'China',
-        access: getAccess(),
-        phone: '15631027945',
       },
     });
   },
