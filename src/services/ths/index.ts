@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const protocal = window.location.protocol;
+
 const baseUrl =
   protocal === 'http:' ? `${protocal}//1.12.67.43/ths` : `${protocal}//www.paulgung.online/ths`;
 
