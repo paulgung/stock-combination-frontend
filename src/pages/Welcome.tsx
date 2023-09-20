@@ -2,9 +2,9 @@ import { getCombinationData, getStockData, getSubcombinationData } from '@/servi
 import { PageContainer, ProList } from '@ant-design/pro-components';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import { ProTable } from '@ant-design/pro-table';
-import { message } from 'antd';
+import { Button, message } from 'antd';
 import React, { ReactText, useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom'; // version 5.2.0
+import { useNavigate } from 'react-router-dom';
 
 type IInterface = {
   id: number;
@@ -13,10 +13,14 @@ type IInterface = {
 // 欢迎页面
 const Welcome: React.FC = () => {
   const actionRef = useRef<ActionType>();
-  const [expandedRowKeys, setExpandedRowKeys] = useState<readonly ReactText[]>([]);  const [combinantionDataSource, setCombinantionDataSource] = useState<any[]>([]);
+  const [expandedRowKeys, setExpandedRowKeys] = useState<readonly ReactText[]>([]);
+  const [combinantionDataSource, setCombinantionDataSource] = useState<any[]>([]);
   const [subCombinantionDataSource, setSubCombinantionDataSource] = useState<any[]>([]);
   const [newDataSource, setNewDataSource] = useState<any[]>([]);
-  const [subId, setSubId] = useState(0);
+  const [subCombinantionId, setSubCombinantionId] = useState(0); //选中的子组合ID
+  const [combinantionId, setCombinantionId] = useState(0); //选中的组合ID
+
+  const navigate = useNavigate();
 
   // 辅助方法
   const getStockColor = (item: any) => {
@@ -30,23 +34,29 @@ const Welcome: React.FC = () => {
   };
 
   // 点击子组合更新股票列表
-  const updateStockList = (subId: number) => {
-    console.log(subId);
-    setSubId(subId)
+  const updateStockListFromSub = (subCombinantionId: number) => {
+    console.log('subCombinantionId', subCombinantionId);
+    setSubCombinantionId(subCombinantionId);
+    setCombinantionId(0);
+    actionRef.current?.reload();
+  };
+
+  // 点击组合更新股票列表(全量)
+  const updateStockList = (combinantionId: number) => {
+    console.log('combinantionId', combinantionId);
+    setCombinantionId(combinantionId);
+    setSubCombinantionId(0);
     actionRef.current?.reload();
   };
 
   useEffect(() => {
-    // 获取组合数据
-    getCombinationData({
-      pageSize: 10,
-      pageNo: 1,
-    }).then(
+    // 全量获取组合数据
+    getCombinationData({}).then(
       // 返回数据
       (res: any) => {
         const _data = res.data?.data.map((item: any) => {
           // proList 会读取title字段
-          return { title: item.combinationName, id: item.id };
+          return { combinationName: item.combinationName, id: item.id };
         });
         setCombinantionDataSource(_data);
       },
@@ -60,11 +70,8 @@ const Welcome: React.FC = () => {
         };
       },
     );
-    // 获取子组合数据
-    getSubcombinationData({
-      pageSize: 10,
-      pageNo: 1,
-    }).then(
+    // 全量获取子组合数据
+    getSubcombinationData({}).then(
       // 返回数据
       (res: any) => {
         const _dataWithSubconbination = res.data?.data.map((item: any) => {
@@ -102,16 +109,6 @@ const Welcome: React.FC = () => {
 
   // 列信息
   const columns: ProColumns<IInterface>[] = [
-    {
-      title: '子组合ID',
-      hideInSearch: false,
-      dataIndex: 'subCombinationId',
-    },
-    {
-      title: '股票ID',
-      hideInSearch: true,
-      dataIndex: 'id',
-    },
     {
       title: '股票名称',
       ellipsis: true,
@@ -154,16 +151,20 @@ const Welcome: React.FC = () => {
       }}
     >
       {/*系统介绍*/}
-      <div style={{ display: 'flex', height: '1000px', width: '100%' }}>
+      <div style={{ display: 'flex', height: '700px', background: '#fff', width: '100%' }}>
         {/* 左侧股票组合 */}
-        <div style={{ width: '50%', background: '#eee' }}>
+        <div style={{ width: '50%', height: '700px' }}>
           <ProList<{ title: string }>
             rowKey="title"
             headerTitle=""
             expandable={{ expandedRowKeys, onExpandedRowsChange: setExpandedRowKeys }}
             dataSource={newDataSource}
             metas={{
-              title: {},
+              title: {
+                render: (_, row: any) => {
+                  return <div onClick={() => updateStockList(row.id)}>{row.combinationName}</div>;
+                },
+              },
               description: {
                 render: (_, row: any) => {
                   console.log('弓少旭想看看render的row', row);
@@ -174,7 +175,7 @@ const Welcome: React.FC = () => {
                           <div
                             key={item.id}
                             style={{ color: 'black', fontWeight: 400, cursor: 'pointer' }}
-                            onClick={() => updateStockList(item.id)}
+                            onClick={() => updateStockListFromSub(item.id)}
                           >
                             {item.subCombinationName}
                           </div>
@@ -195,13 +196,15 @@ const Welcome: React.FC = () => {
             actionRef={actionRef}
             cardBordered
             search={false}
-            request={async ({ rows = 10, current}) => {
+            request={async ({ rows = 10, current }) => {
               return getStockData({
                 pageSize: rows,
                 pageNo: current,
-                subCombinationId: subId ? subId : null,
+                subCombinationId: subCombinantionId ? subCombinantionId : null,
+                combinantionId: combinantionId ? combinantionId : null,
               }).then(
                 (res: any) => {
+                  console.log('弓少旭想分辨res', res);
                   return {
                     data: res.data?.data,
                     success: res.data?.success,
@@ -232,6 +235,10 @@ const Welcome: React.FC = () => {
             }}
             dateFormatter="string"
           />
+        </div>
+        {/* 悬浮按钮 */}
+        <div style={{ position: 'fixed', bottom: '40px', left: '70px' }}>
+          <Button onClick={() => navigate(`/ths/combination`)}>进入后台</Button>
         </div>
       </div>
     </PageContainer>

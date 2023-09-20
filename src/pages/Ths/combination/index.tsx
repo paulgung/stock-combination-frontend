@@ -1,9 +1,10 @@
-import { getCombinationData } from '@/services/ths';
+import { addStockCombination, getCombinationData } from '@/services/ths';
+import { ModalForm, ProFormText } from '@ant-design/pro-components';
 import { PageContainer } from '@ant-design/pro-layout';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import { ProTable } from '@ant-design/pro-table';
-import { message } from 'antd';
-import React, { useRef } from 'react';
+import { Button, message } from 'antd';
+import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // version 5.2.0
 
 type IInterface = {
@@ -14,6 +15,7 @@ type IInterface = {
 const Index: React.FC = () => {
   const actionRef = useRef<ActionType>();
   const navigate = useNavigate();
+  const [createModalOpen, handleModalOpen] = useState<boolean>(false);
 
   // 携带父组合id跳转子组合
   const jumpSubCombination = (id: number): void => {
@@ -27,7 +29,7 @@ const Index: React.FC = () => {
       dataIndex: 'id',
     },
     {
-      title: '组合信息',
+      title: '组合名称',
       ellipsis: true,
       dataIndex: 'combinationName',
       hideInSearch: true,
@@ -82,6 +84,17 @@ const Index: React.FC = () => {
             },
           );
         }}
+        toolBarRender={() => [
+          <Button
+            type="primary"
+            key="primary"
+            onClick={() => {
+              handleModalOpen(true);
+            }}
+          >
+            新增
+          </Button>,
+        ]}
         editable={{
           type: 'multiple',
         }}
@@ -96,6 +109,37 @@ const Index: React.FC = () => {
         }}
         dateFormatter="string"
       />
+
+      {/* 弹框 */}
+      <ModalForm
+        labelCol={{ span: 4 }}
+        title="新增组合"
+        layout={'horizontal'}
+        width="500px"
+        open={createModalOpen}
+        onOpenChange={handleModalOpen}
+        onFinish={async (value) => {
+          console.log('弓少旭想看看value', value);
+          const success = await addStockCombination(value);
+          if (success) {
+            handleModalOpen(false);
+            if (actionRef.current) {
+              actionRef.current.reload();
+            }
+          }
+        }}
+      >
+        <ProFormText
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+          label="组合名称"
+          width="md"
+          name="combinationName"
+        />
+      </ModalForm>
     </PageContainer>
   );
 };

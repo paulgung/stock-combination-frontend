@@ -1,9 +1,10 @@
 import { getStockData } from '@/services/ths';
+import { ModalForm, ProFormText } from '@ant-design/pro-components';
 import { PageContainer } from '@ant-design/pro-layout';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import { ProTable } from '@ant-design/pro-table';
 import { Button, message } from 'antd';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 type IInterface = {
@@ -24,8 +25,14 @@ const getStockColor = (item: any) => {
 const Index: React.FC = () => {
   const actionRef = useRef<ActionType>();
   const { subId: subCombinationId } = useParams(); // 获取父组合id
+  const [createModalOpen, handleModalOpen] = useState<boolean>(false);
 
   const columns: ProColumns<IInterface>[] = [
+    {
+      title: '组合ID',
+      hideInSearch: false,
+      dataIndex: 'combinationId',
+    },
     {
       title: '子组合ID',
       hideInSearch: false,
@@ -102,8 +109,14 @@ const Index: React.FC = () => {
           );
         }}
         toolBarRender={() => [
-          <Button type="primary" key="primary">
-            新建
+          <Button
+            type="primary"
+            key="primary"
+            onClick={() => {
+              handleModalOpen(true);
+            }}
+          >
+            新增
           </Button>,
         ]}
         editable={{
@@ -120,6 +133,97 @@ const Index: React.FC = () => {
         }}
         dateFormatter="string"
       />
+
+      {/* 弹框 */}
+      <ModalForm
+        labelCol={{ span: 5 }}
+        title="新增股票信息"
+        layout={'horizontal'}
+        width="500px"
+        open={createModalOpen}
+        onOpenChange={handleModalOpen}
+        onFinish={async (value) => {
+          console.log('弓少旭想看看value', value);
+          const success = await addStockCombination(value);
+          if (success) {
+            handleModalOpen(false);
+            if (actionRef.current) {
+              actionRef.current.reload();
+            }
+          }
+        }}
+      >
+        <ProFormText
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+          label="组合ID"
+          width="md"
+          name="combinationId"
+        />
+        <ProFormText
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+          label="子组合ID"
+          width="md"
+          name="subCombinationId"
+        />
+        <ProFormText
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+          label="股票名称"
+          width="md"
+          name="stockName"
+        />
+        <ProFormText
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+          label="股票编号"
+          width="md"
+          name="stockCode"
+        />
+        <ProFormText
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+          label="股票价格"
+          width="md"
+          name="stockPrice"
+        />
+        <ProFormText
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+          label="涨跌幅"
+          width="md"
+          name="stockGains"
+        />
+        <ProFormText
+          rules={[
+            {
+              required: false,
+            },
+          ]}
+          label="个股页面"
+          width="md"
+          name="stockUrl"
+        />
+      </ModalForm>
     </PageContainer>
   );
 };
