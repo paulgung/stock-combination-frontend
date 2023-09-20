@@ -14,11 +14,11 @@ type IInterface = {
 const Welcome: React.FC = () => {
   const actionRef = useRef<ActionType>();
   const [expandedRowKeys, setExpandedRowKeys] = useState<readonly ReactText[]>([]);
-  const [combinantionDataSource, setCombinantionDataSource] = useState<any[]>([]);
-  const [subCombinantionDataSource, setSubCombinantionDataSource] = useState<any[]>([]);
+  const [combinationDataSource, setCombinationDataSource] = useState<any[]>([]);
+  const [subCombinationDataSource, setSubCombinationDataSource] = useState<any[]>([]);
   const [newDataSource, setNewDataSource] = useState<any[]>([]);
-  const [subCombinantionId, setSubCombinantionId] = useState(0); //选中的子组合ID
-  const [combinantionId, setCombinantionId] = useState(0); //选中的组合ID
+  const [subCombinationId, setSubCombinationId] = useState(0); //选中的子组合ID
+  const [combinationId, setCombinationId] = useState(0); //选中的组合ID
 
   const navigate = useNavigate();
 
@@ -34,18 +34,18 @@ const Welcome: React.FC = () => {
   };
 
   // 点击子组合更新股票列表
-  const updateStockListFromSub = (subCombinantionId: number) => {
-    console.log('subCombinantionId', subCombinantionId);
-    setSubCombinantionId(subCombinantionId);
-    setCombinantionId(0);
+  const updateStockListFromSub = (subCombinationId: number) => {
+    console.log('subCombinationId', subCombinationId);
+    setSubCombinationId(subCombinationId);
+    setCombinationId(0);
     actionRef.current?.reload();
   };
 
   // 点击组合更新股票列表(全量)
-  const updateStockList = (combinantionId: number) => {
-    console.log('combinantionId', combinantionId);
-    setCombinantionId(combinantionId);
-    setSubCombinantionId(0);
+  const updateStockList = (combinationId: number) => {
+    console.log('combinationId', combinationId);
+    setCombinationId(combinationId);
+    setSubCombinationId(0);
     actionRef.current?.reload();
   };
 
@@ -58,7 +58,7 @@ const Welcome: React.FC = () => {
           // proList 会读取title字段
           return { combinationName: item.combinationName, id: item.id };
         });
-        setCombinantionDataSource(_data);
+        setCombinationDataSource(_data);
       },
       // 失败处理
       (): any => {
@@ -82,7 +82,7 @@ const Welcome: React.FC = () => {
             subCombinationName: item.subCombinationName,
           };
         });
-        setSubCombinantionDataSource(_dataWithSubconbination);
+        setSubCombinationDataSource(_dataWithSubconbination);
       },
       // 失败处理
       (): any => {
@@ -97,15 +97,15 @@ const Welcome: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const _newDataSource = combinantionDataSource.map((item) => {
-      const subList = subCombinantionDataSource.filter((item2) => {
+    const _newDataSource = combinationDataSource.map((item) => {
+      const subList = subCombinationDataSource.filter((item2) => {
         return item.id === item2.combinationId;
       });
       return { ...item, subList };
     });
 
     setNewDataSource(_newDataSource);
-  }, [combinantionDataSource, subCombinantionDataSource]);
+  }, [combinationDataSource, subCombinationDataSource]);
 
   // 列信息
   const columns: ProColumns<IInterface>[] = [
@@ -200,8 +200,8 @@ const Welcome: React.FC = () => {
               return getStockData({
                 pageSize: rows,
                 pageNo: current,
-                subCombinationId: subCombinantionId ? subCombinantionId : null,
-                combinantionId: combinantionId ? combinantionId : null,
+                subCombinationId: subCombinationId ? subCombinationId : null,
+                combinationId: combinationId ? combinationId : null,
               }).then(
                 (res: any) => {
                   console.log('弓少旭想分辨res', res);
