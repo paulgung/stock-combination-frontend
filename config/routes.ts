@@ -6,15 +6,26 @@
       {
         name: '登录',
         path: '/user/login',
-        component: './User/Login'
-      }
+        component: './User/Login',
+      },
     ],
+  },
+  {
+    path: '/',
+    redirect: '/welcome',
   },
   {
     path: '/welcome',
     name: '首页',
     icon: 'home',
-    component: './Welcome'
+    component: './Welcome',
+    footerRender: false,
+    // 不展示菜单
+    menuRender: false,
+    // 不展示菜单顶栏
+    menuHeaderRender: false,
+    // 不展示顶栏
+    headerRender: false,
   },
   {
     path: '/ths',
@@ -23,12 +34,12 @@
     routes: [
       {
         path: '/ths',
-        redirect: '/ths/combination'
+        redirect: '/ths/combination',
       },
       {
         path: '/ths/combination',
         name: '组合',
-        component: './Ths/combination'
+        component: './Ths/combination',
       },
       {
         path: '/ths/subcombination',
@@ -53,16 +64,16 @@
         name: '股票信息',
         component: './Ths/stocks',
         hideInMenu: true, // 隐藏菜单项
-      }
+      },
     ],
   },
   {
     path: '/',
-    redirect: '/welcome'
+    redirect: '/welcome',
   },
   {
     path: '*',
     layout: false,
-    component: './404'
+    component: './404',
   },
 ];
