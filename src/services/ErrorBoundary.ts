@@ -20,9 +20,9 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 
     this.setState({ hasError: true });
     ClientMonitor.reportFrameErrors( {
-        collector : 'XXX',
-        service: 'react-demo',
-        pagePath: ' /app',
+        collector : 'https://khtest.10jqka.com.cn/skywalking-web',
+        service: 'mobileweb-training-camp-group8',
+        pagePath: location.hash.replace('#', '') || '/root',
         serviceVersion: 'v1.0.0',
     },
     error,)
