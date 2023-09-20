@@ -3,6 +3,7 @@ import { Button, Result } from 'antd';
 import React from 'react';
 
 const NoFoundPage: React.FC = () => (
+  <ErrorBoundary> 
   <Result
     status="404"
     title="404"
@@ -13,6 +14,7 @@ const NoFoundPage: React.FC = () => (
       </Button>
     }
   />
+  </ErrorBoundary> 
 );
 
 export default NoFoundPage;
