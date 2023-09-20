@@ -1,4 +1,4 @@
-import { getSubcombinationData } from '@/services/ths';
+import { addSubStockCombination, getSubcombinationData } from '@/services/ths';
 import { ModalForm, ProFormText } from '@ant-design/pro-components';
 import { PageContainer } from '@ant-design/pro-layout';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
@@ -114,8 +114,11 @@ const Index: React.FC = () => {
         open={createModalOpen}
         onOpenChange={handleModalOpen}
         onFinish={async (value) => {
-          console.log('弓少旭想看看value', value);
-          const success = await addStockCombination(value);
+          const _value = {
+            ...value,
+            combinationId: parseInt(value.combinationId),
+          };
+          const success = await addSubStockCombination(_value);
           if (success) {
             handleModalOpen(false);
             if (actionRef.current) {

@@ -1,5 +1,4 @@
 import React, { Component, ReactNode } from 'react';
-import ClientMonitor from 'skywalking-client-js';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -31,10 +30,6 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   }
 
   render() {
-    if (this.state.hasError) {
-      return <h1>things not good</h1>;
-    }
-
     return this.props.children;
   }
 }

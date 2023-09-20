@@ -33,7 +33,7 @@ export async function getStockData(params?: { [key: string]: any }) {
 export async function addStockCombination(params?: { [key: string]: any }) {
   return axios(baseUrl + '/combination', {
     method: 'POST',
-    params: params,
+    data: params,
   });
 }
 
@@ -41,7 +41,7 @@ export async function addStockCombination(params?: { [key: string]: any }) {
 export async function addSubStockCombination(params?: { [key: string]: any }) {
   return axios(baseUrl + '/subCombination', {
     method: 'POST',
-    params: params,
+    data: params,
   });
 }
 
@@ -49,7 +49,7 @@ export async function addSubStockCombination(params?: { [key: string]: any }) {
 export async function addStocks(params?: { [key: string]: any }) {
   return axios(baseUrl + '/stocks', {
     method: 'POST',
-    params: params,
+    data: params,
   });
 }
 

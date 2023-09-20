@@ -1,4 +1,4 @@
-import { getStockData } from '@/services/ths';
+import { addStocks, getStockData } from '@/services/ths';
 import { ModalForm, ProFormText } from '@ant-design/pro-components';
 import { PageContainer } from '@ant-design/pro-layout';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
@@ -143,8 +143,12 @@ const Index: React.FC = () => {
         open={createModalOpen}
         onOpenChange={handleModalOpen}
         onFinish={async (value) => {
-          console.log('弓少旭想看看value', value);
-          const success = await addStockCombination(value);
+          const _value = {
+            ...value,
+            combinationId: parseInt(value.combinationId),
+            subCombinationId: parseInt(value.subCombinationId),
+          };
+          const success = await addStocks(_value);
           if (success) {
             handleModalOpen(false);
             if (actionRef.current) {
