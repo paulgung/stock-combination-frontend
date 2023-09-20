@@ -1,5 +1,5 @@
 import React, { Component, ReactNode } from 'react';
-import ClientMonitor from "skywalking-client-js";
+import ClientMonitor from 'skywalking-client-js';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -19,18 +19,20 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     console.error('Error occurred:', error, errorInfo);
 
     this.setState({ hasError: true });
-    ClientMonitor.reportFrameErrors( {
-        collector : 'https://khtest.10jqka.com.cn/skywalking-web',
+    ClientMonitor.reportFrameErrors(
+      {
+        collector: 'https://khtest.10jqka.com.cn/skywalking-web',
         service: 'mobileweb-training-camp-group8',
         pagePath: location.hash.replace('#', '') || '/root',
         serviceVersion: 'v1.0.0',
-    },
-    error,)
+      },
+      error,
+    );
   }
 
   render() {
     if (this.state.hasError) {
-      return <h1>things not good</h1>; 
+      return <h1>things not good</h1>;
     }
 
     return this.props.children;

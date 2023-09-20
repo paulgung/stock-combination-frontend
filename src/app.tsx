@@ -7,8 +7,6 @@ import ths from './images/ths.jpeg';
 import { errorConfig } from './requestErrorConfig';
 const loginPath = '/user/login';
 
-
-
 // 引入 SkyWalking 脚本
 const skywalkingScript = document.createElement('script');
 skywalkingScript.src = 'https://s.thsi.cn/hxapp/m/base/js/skywalking.1.1.13.min.js';
@@ -20,9 +18,9 @@ skywalkingScript.onload = () => {
   try {
     if (typeof ClientMonitor !== 'undefined') {
       ClientMonitor.register({
-        collector: "https://khtest.10jqka.com.cn/skywalking-web",
+        collector: 'https://khtest.10jqka.com.cn/skywalking-web',
         rate: 1,
-        service : 'mobileweb-training-camp-group8',
+        service: 'mobileweb-training-camp-group8',
         pagePath: location.hash.replace('#', '') || '/root',
         enableSPA: false,
         useFmp: true,
@@ -33,7 +31,7 @@ skywalkingScript.onload = () => {
   } catch (e) {
     console.warn('Error registering SkyWalking:', e.message);
   }
-}
+};
 
 /**
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
