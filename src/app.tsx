@@ -18,7 +18,7 @@ skywalkingScript.onload = () => {
   try {
     if (typeof ClientMonitor !== 'undefined') {
       ClientMonitor.register({
-        collector: 'https://khtest.10jqka.com.cn/skywalking-web',
+        collector: 'https://apm.hexin.cn/skywalking-web',
         rate: 1,
         service: 'mobileweb-training-camp-group8',
         pagePath: location.hash.replace('#', '') || '/root',
