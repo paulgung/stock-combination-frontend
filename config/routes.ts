@@ -76,4 +76,11 @@
     layout: false,
     component: './404',
   },
+  {
+    path: '/kline/:sc&:mid',
+    name: '分时K线',
+    layout: false,
+    icon: 'home',
+    component: './KLine',
+  },
 ];

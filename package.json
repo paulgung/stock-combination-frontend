@@ -49,6 +49,8 @@
     "@ant-design/plots": "^1.2.5",
     "@ant-design/pro-components": "^2.3.57",
     "@ant-design/use-emotion-css": "1.0.4",
+    "@ths-m/HXKline": "^0.1.2-beta.15",
+    "@ths-m/HXKlineChart": "^2.0.3-beta.9",
     "@umijs/route-utils": "^2.2.2",
     "antd": "^5.2.2",
     "classnames": "^2.3.2",
