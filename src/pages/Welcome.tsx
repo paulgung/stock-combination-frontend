@@ -49,6 +49,11 @@ const Welcome: React.FC = () => {
     actionRef.current?.reload();
   };
 
+  // 点击跳转分时k线图
+  const jumpKline = (stockCode: number, marketCode: number) => {
+    navigate(`/kline/${stockCode}&${marketCode}`);
+  };
+
   useEffect(() => {
     // 全量获取组合数据
     getCombinationData({}).then(
@@ -116,7 +121,11 @@ const Welcome: React.FC = () => {
       hideInSearch: true,
       render: (item, record: any) => {
         return (
-          <a href={record?.stockUrl} target="_blank" rel="noreferrer">
+          <a
+            onClick={() => jumpKline(record?.stockCode, record?.marketCode)}
+            target="_blank"
+            rel="noreferrer"
+          >
             {item}
           </a>
         );
