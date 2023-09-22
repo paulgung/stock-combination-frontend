@@ -49,7 +49,7 @@ const Welcome: React.FC = () => {
     actionRef.current?.reload();
   };
 
-  // 点击跳转分时k线图
+  // 点击股票跳转分时k线图
   const jumpKline = (stockCode: number, marketCode: number) => {
     navigate(`/kline/${stockCode}&${marketCode}`);
   };
