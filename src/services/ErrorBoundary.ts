@@ -24,6 +24,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
         service: 'mobileweb-training-camp-group8',
         pagePath: location.hash.replace('#', '') || '/root',
         serviceVersion: 'v1.0.0',
+        group: 'camp8',
       },
       error,
     );

@@ -24,6 +24,7 @@ skywalkingScript.onload = () => {
         pagePath: location.hash.replace('#', '') || '/root',
         enableSPA: false,
         useFmp: true,
+        gourp: 'camp8'
       });
     } else {
       console.warn('ClientMonitor is undefined. SkyWalking may not be properly loaded.');
