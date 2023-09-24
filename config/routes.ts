@@ -83,4 +83,11 @@
     icon: 'home',
     component: './KLine',
   },
+  {
+    path: '/kline',
+    name: '分时K线',
+    layout: false,
+    icon: 'home',
+    component: './KLine',
+  },
 ];

@@ -51,7 +51,7 @@ const Welcome: React.FC = () => {
 
   // 点击股票跳转分时k线图
   const jumpKline = (stockCode: number, marketCode: number) => {
-    window.open(`/kline/${stockCode}&${marketCode}`, '_blank');
+    navigate(`/kline/${stockCode}&${marketCode}`);
   };
 
   useEffect(() => {
