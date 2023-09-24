@@ -112,7 +112,7 @@ const Welcome: React.FC = () => {
     setNewDataSource(_newDataSource);
   }, [combinationDataSource, subCombinationDataSource]);
 
-  // 列信息
+  // 列信息 
   const columns: ProColumns<IInterface>[] = [
     {
       title: '股票名称',
