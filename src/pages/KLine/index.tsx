@@ -55,6 +55,7 @@ const Index: React.FC = () => {
 
 
     return (
+        <ErrorBoundary>
         <div style={{
             padding: '0',
             height: '100%',
@@ -64,6 +65,7 @@ const Index: React.FC = () => {
                 height: '100%',
             }}></div>
         </div>
+        </ErrorBoundary>
     );
 };
 export default Index;
