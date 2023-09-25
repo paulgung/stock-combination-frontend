@@ -48,7 +48,7 @@ const Index: React.FC = () => {
 
   return (
     <PageContainer>
-      <ErrorBoundary>
+      
       <ProTable<IInterface>
         headerTitle="组合信息"
         columns={columns}
@@ -141,7 +141,7 @@ const Index: React.FC = () => {
           name="combinationName"
         />
       </ModalForm>
-      </ErrorBoundary>
+      
     </PageContainer>
   );
 };
