@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'; // version 5.2.0
 // 由于HXKline依赖于HXKlineChart，所以此处需要先引用HXKlineChart(会自动挂载到window)，如仍报错无法找到HXKlineChart，请使用`HXKline.setHXKlineChart(HXKlineChart)`方式关联
 import HXKlineChart from '@ths-m/HXKlineChart';
 
+import ErrorBoundary from '@/services/ErrorBoundary';
 import HXKline from '@ths-m/HXKline/lib/HXKline.common';
 
 type StockListItem = {
@@ -78,28 +79,30 @@ const Index: React.FC = () => {
   }, []);
 
   return (
-    <div
-      style={{
-        padding: '0',
-        height: '100%',
-      }}
-    >
+    <ErrorBoundary>
       <div
-        id="kline-chart"
         style={{
-          width: '100%',
-          height: '80%',
+          padding: '0',
+          height: '100%',
         }}
-      ></div>
-      <div
-        id="trend-chart"
-        style={{
-          width: '100%',
-          height: '19%',
-          borderTop: '1px solid #ccc',
-        }}
-      ></div>
-    </div>
+      >
+        <div
+          id="kline-chart"
+          style={{
+            width: '100%',
+            height: '80%',
+          }}
+        ></div>
+        <div
+          id="trend-chart"
+          style={{
+            width: '100%',
+            height: '19%',
+            borderTop: '1px solid #ccc',
+          }}
+        ></div>
+      </div>
+    </ErrorBoundary>
   );
 };
 export default Index;
